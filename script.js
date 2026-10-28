@@ -2,7 +2,7 @@
    JAM CN Valparaíso — script.js
    ========================================================= */
 
-const URL_PLANILHA = "COLE_AQUI_A_URL_DO_WEB_APP_DO_GOOGLE_APPS_SCRIPT";
+const URL_PLANILHA = "https://script.google.com/macros/s/AKfycbwdOI4p1_hN-Yo52odptRS_-s3aFzwwPconeX-yUu_0AmYkwPwMji5yEUiDD_uFKyI_/exec";
 
 // Evento: 14/11/2026, 16h às 19h (horário de Brasília, UTC-3)
 const EVENTO_INICIO = new Date("2026-11-14T16:00:00-03:00");
