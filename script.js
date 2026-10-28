@@ -2,7 +2,7 @@
    JAM CN Valparaíso — script.js
    ========================================================= */
 
-const URL_PLANILHA = "https://script.google.com/macros/s/AKfycbwdOI4p1_hN-Yo52odptRS_-s3aFzwwPconeX-yUu_0AmYkwPwMji5yEUiDD_uFKyI_/exec";
+const URL_PLANILHA = "COLE_AQUI_A_URL_DO_WEB_APP_DO_GOOGLE_APPS_SCRIPT";
 
 // Evento: 14/11/2026, 16h às 19h (horário de Brasília, UTC-3)
 const EVENTO_INICIO = new Date("2026-11-14T16:00:00-03:00");
@@ -13,7 +13,7 @@ const $ = (s, el = document) => el.querySelector(s);
 const $$ = (s, el = document) => [...el.querySelectorAll(s)];
 const reduzMovimento = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
 
-/* ---------- Scroll reveal ---------- */
+/* Scroll reveal */
 (function () {
   const itens = $$(".reveal");
   if (!("IntersectionObserver" in window)) { itens.forEach(i => i.classList.add("in")); return; }
@@ -25,7 +25,7 @@ const reduzMovimento = window.matchMedia("(prefers-reduced-motion: reduce)").mat
   itens.forEach(i => io.observe(i));
 })();
 
-/* ---------- Brilho dos botões seguindo o mouse ---------- */
+/* Brilho dos botões */
 $$(".btn--glow").forEach(function (btn) {
   btn.addEventListener("pointermove", function (e) {
     const r = btn.getBoundingClientRect();
@@ -34,9 +34,10 @@ $$(".btn--glow").forEach(function (btn) {
   });
 });
 
-/* ---------- Hero: ondas sonoras + partículas reagindo ao mouse ---------- */
+/* Hero FX */
 (function () {
   const canvas = $("#fx");
+  if (!canvas) return;
   const hero = canvas.parentElement;
   const ctx = canvas.getContext("2d");
   let w = 0, h = 0, dpr = 1, t = 0, rodando = false;
@@ -64,7 +65,6 @@ $$(".btn--glow").forEach(function (btn) {
     mouse.x += (mouse.alvoX - mouse.x) * .12;
     mouse.y += (mouse.alvoY - mouse.y) * .12;
 
-    // Ondas
     const linhas = 5;
     for (let i = 0; i < linhas; i++) {
       const baseY = h * (.5 + i * .09);
@@ -88,7 +88,6 @@ $$(".btn--glow").forEach(function (btn) {
       ctx.stroke();
     }
 
-    // Partículas
     particulas.forEach(function (p) {
       const dx = p.x - mouse.x, dy = p.y - mouse.y;
       const d2 = dx * dx + dy * dy;
@@ -131,7 +130,7 @@ $$(".btn--glow").forEach(function (btn) {
   }
 })();
 
-/* ---------- Countdown + status ao vivo ---------- */
+/* Countdown */
 (function () {
   const caixas = { d: $('[data-u="d"]'), h: $('[data-u="h"]'), m: $('[data-u="m"]'), s: $('[data-u="s"]') };
   const label = $("#cd-label");
@@ -140,7 +139,7 @@ $$(".btn--glow").forEach(function (btn) {
   const pad = n => String(n).padStart(2, "0");
 
   function set(el, valor) {
-    if (el.textContent !== valor) {
+    if (el && el.textContent !== valor) {
       el.textContent = valor;
       el.classList.remove("tick"); void el.offsetWidth; el.classList.add("tick");
     }
@@ -151,15 +150,15 @@ $$(".btn--glow").forEach(function (btn) {
     let resto = EVENTO_INICIO - agora;
 
     if (agora >= EVENTO_FIM) {
-      label.textContent = "Obrigado por fazer música com a gente 🙌";
-      status.className = "status is-off"; statusTxt.textContent = "Inscrições encerradas";
-      Object.values(caixas).forEach(c => c.textContent = "00");
+      if (label) label.textContent = "Obrigado por fazer música com a gente 🙌";
+      if (status) { status.className = "status is-off"; if (statusTxt) statusTxt.textContent = "Inscrições encerradas"; }
+      Object.values(caixas).forEach(c => { if (c) c.textContent = "00"; });
       return;
     }
     if (resto <= 0) {
-      label.textContent = "É agora! A JAM já começou 🎶";
-      status.className = "status is-live"; statusTxt.textContent = "Acontecendo agora";
-      Object.values(caixas).forEach(c => c.textContent = "00");
+      if (label) label.textContent = "É agora! A JAM já começou 🎶";
+      if (status) { status.className = "status is-live"; if (statusTxt) statusTxt.textContent = "Acontecendo agora"; }
+      Object.values(caixas).forEach(c => { if (c) c.textContent = "00"; });
       return;
     }
     const s = Math.floor(resto / 1000);
@@ -173,7 +172,7 @@ $$(".btn--glow").forEach(function (btn) {
   setInterval(atualizar, 1000);
 })();
 
-/* ---------- Formulário ---------- */
+/* Formulário */
 const form = $("#formulario");
 const aviso = $("#aviso");
 const botao = $("#botao");
@@ -185,25 +184,24 @@ const outraInner = $(".collapse__inner", outraWrap);
 const outraInput = campo("outra_igreja");
 const instInput = campo("instrumento");
 
-// Limita a data de nascimento até hoje
 (function () {
   const hoje = new Date();
   const iso = hoje.getFullYear() + "-" + String(hoje.getMonth() + 1).padStart(2, "0") + "-" + String(hoje.getDate()).padStart(2, "0");
-  campo("nascimento").max = iso;
+  if (campo("nascimento")) campo("nascimento").max = iso;
 })();
 
-// Máscara de telefone
-campo("telefone").addEventListener("input", function (e) {
-  let d = e.target.value.replace(/\D/g, "").slice(0, 11);
-  let r = d;
-  if (d.length > 10) r = d.replace(/^(\d{2})(\d{5})(\d{4}).*/, "($1) $2-$3");
-  else if (d.length > 6) r = d.replace(/^(\d{2})(\d{4})(\d{0,4}).*/, "($1) $2-$3");
-  else if (d.length > 2) r = d.replace(/^(\d{2})(\d{0,5}).*/, "($1) $2");
-  else if (d.length > 0) r = "(" + d;
-  e.target.value = r;
-});
+if (campo("telefone")) {
+  campo("telefone").addEventListener("input", function (e) {
+    let d = e.target.value.replace(/\D/g, "").slice(0, 11);
+    let r = d;
+    if (d.length > 10) r = d.replace(/^(\d{2})(\d{5})(\d{4}).*/, "($1) $2-$3");
+    else if (d.length > 6) r = d.replace(/^(\d{2})(\d{4})(\d{0,4}).*/, "($1) $2-$3");
+    else if (d.length > 2) r = d.replace(/^(\d{2})(\d{0,5}).*/, "($1) $2");
+    else if (d.length > 0) r = "(" + d;
+    e.target.value = r;
+  });
+}
 
-// Regras de validação (retornam "" se válido, ou a mensagem de erro)
 const regras = {
   nome: v => {
     const partes = v.trim().split(/\s+/).filter(Boolean);
@@ -223,25 +221,29 @@ const regras = {
   instrumento: v => v.trim().length >= 2 ? "" : "Escolha ou digite seu instrumento.",
   igreja: v => v ? "" : "Selecione sua igreja.",
   outra_igreja: v => v.trim().length >= 2 ? "" : "Informe o nome da sua igreja.",
-  termos: () => campo("termos").checked ? "" : "É preciso aceitar para participar."
+  termos: () => campo("termos") && campo("termos").checked ? "" : "É preciso aceitar para participar."
 };
 
 const tocados = new Set();
-const outraAberta = () => igreja.value === "Outra igreja";
+const outraAberta = () => igreja && igreja.value === "Outra igreja";
 const camposAtivos = () => Object.keys(regras).filter(n => n !== "outra_igreja" || outraAberta());
 
 function valorDe(nome) {
   const el = campo(nome);
+  if (!el) return "";
   return el.type === "checkbox" ? el.checked : el.value;
 }
 
 function validar(nome, mostrar) {
   const msg = regras[nome](valorDe(nome));
-  if (mostrar) {
+  if (mostrar && campo(nome)) {
     const wrap = campo(nome).closest(".field");
-    wrap.classList.toggle("is-invalid", !!msg);
-    wrap.classList.toggle("is-valid", !msg && nome !== "termos");
-    $(".msg", wrap).textContent = msg;
+    if (wrap) {
+      wrap.classList.toggle("is-invalid", !!msg);
+      wrap.classList.toggle("is-valid", !msg && nome !== "termos");
+      const msgEl = $(".msg", wrap);
+      if (msgEl) msgEl.textContent = msg;
+    }
   }
   return msg;
 }
@@ -249,8 +251,8 @@ function validar(nome, mostrar) {
 function atualizarProgresso() {
   const ativos = camposAtivos();
   const ok = ativos.filter(n => !regras[n](valorDe(n))).length;
-  campo("prog-bar").style.width = (ok / ativos.length * 100) + "%";
-  campo("prog-txt").textContent = ok + " de " + ativos.length;
+  if (campo("prog-bar")) campo("prog-bar").style.width = (ok / ativos.length * 100) + "%";
+  if (campo("prog-txt")) campo("prog-txt").textContent = ok + " de " + ativos.length;
 }
 
 function aoInteragir(nome, evento) {
@@ -261,47 +263,52 @@ function aoInteragir(nome, evento) {
 
 Object.keys(regras).forEach(function (nome) {
   const el = campo(nome);
-  el.addEventListener("input", () => aoInteragir(nome, "input"));
-  el.addEventListener("change", () => aoInteragir(nome, "input"));
-  el.addEventListener("blur", () => aoInteragir(nome, "blur"));
+  if (el) {
+    el.addEventListener("input", () => aoInteragir(nome, "input"));
+    el.addEventListener("change", () => aoInteragir(nome, "input"));
+    el.addEventListener("blur", () => aoInteragir(nome, "blur"));
+  }
 });
 
-// Campo condicional "Outra igreja" (aparece com animação suave)
 function atualizarOutra() {
   const abrir = outraAberta();
-  outraWrap.classList.toggle("open", abrir);
-  outraInner.inert = !abrir;
-  outraInput.disabled = !abrir;
-  if (abrir) {
-    setTimeout(() => outraInput.focus({ preventScroll: true }), 350);
-  } else {
-    outraInput.value = "";
-    tocados.delete("outra_igreja");
-    const wrap = outraInput.closest(".field");
-    wrap.classList.remove("is-valid", "is-invalid");
+  if (outraWrap) outraWrap.classList.toggle("open", abrir);
+  if (outraInner) outraInner.inert = !abrir;
+  if (outraInput) {
+    outraInput.disabled = !abrir;
+    if (abrir) {
+      setTimeout(() => outraInput.focus({ preventScroll: true }), 350);
+    } else {
+      outraInput.value = "";
+      tocados.delete("outra_igreja");
+      const wrap = outraInput.closest(".field");
+      if (wrap) wrap.classList.remove("is-valid", "is-invalid");
+    }
   }
   atualizarProgresso();
 }
-igreja.addEventListener("change", atualizarOutra);
+if (igreja) igreja.addEventListener("change", atualizarOutra);
 
-/* ---------- Seletor interativo de instrumento ---------- */
+/* Seletor de instrumento */
 (function () {
   const cards = $$(".inst");
   const msg = campo("picker-msg");
   const outroWrap = campo("outro-wrap");
   const outroInput = campo("outro-inst");
   const outroInner = $(".collapse__inner", outroWrap);
-  outroInner.inert = true;
+  if (outroInner) outroInner.inert = true;
 
   function marcar(valor) {
     cards.forEach(c => c.setAttribute("aria-checked", String(c.dataset.valor === valor)));
   }
 
   function preencherForm(valor) {
-    instInput.value = valor;
-    tocados.add("instrumento");
-    validar("instrumento", true);
-    atualizarProgresso();
+    if (instInput) {
+      instInput.value = valor;
+      tocados.add("instrumento");
+      validar("instrumento", true);
+      atualizarProgresso();
+    }
   }
 
   cards.forEach(function (card) {
@@ -309,139 +316,184 @@ igreja.addEventListener("change", atualizarOutra);
       const valor = card.dataset.valor;
       marcar(valor);
       const outro = valor === "Outro";
-      outroWrap.classList.toggle("open", outro);
-      outroInner.inert = !outro;
+      if (outroWrap) outroWrap.classList.toggle("open", outro);
+      if (outroInner) outroInner.inert = !outro;
 
       if (outro) {
         preencherForm("");
         tocados.delete("instrumento");
-        instInput.closest(".field").classList.remove("is-valid", "is-invalid");
-        outroInput.value = "";
-        msg.textContent = "Conta pra gente qual é o seu instrumento ou função.";
-        setTimeout(() => outroInput.focus({ preventScroll: true }), 350);
+        if (instInput) {
+          const wrap = instInput.closest(".field");
+          if (wrap) wrap.classList.remove("is-valid", "is-invalid");
+        }
+        if (outroInput) outroInput.value = "";
+        if (msg) msg.textContent = "Conta pra gente qual é o seu instrumento ou função.";
+        if (outroInput) setTimeout(() => outroInput.focus({ preventScroll: true }), 350);
       } else {
         preencherForm(valor);
-        msg.innerHTML = "<strong>" + valor + "</strong> escolhido! Já preenchemos para você. <a href=\"#inscricao\">Continuar inscrição →</a>";
+        if (msg) msg.textContent = valor + " escolhido! Já preenchemos para você.";
       }
     });
   });
 
-  // "Outro": o que a pessoa digita aqui vai para o formulário
-  outroInput.addEventListener("input", function () {
-    instInput.value = outroInput.value;
-    tocados.add("instrumento");
-    validar("instrumento", true);
-    atualizarProgresso();
-    msg.innerHTML = outroInput.value.trim() ? "Anotado! <a href=\"#inscricao\">Continuar inscrição →</a>" : "";
-  });
+  if (outroInput) {
+    outroInput.addEventListener("input", function () {
+      if (instInput) {
+        instInput.value = outroInput.value;
+        tocados.add("instrumento");
+        validar("instrumento", true);
+        atualizarProgresso();
+      }
+      if (msg) msg.textContent = outroInput.value.trim() ? "Anotado!" : "";
+    });
+  }
 
-  // Digitar direto no formulário mantém o seletor em sincronia
-  instInput.addEventListener("input", function () {
-    const v = instInput.value.trim().toLowerCase();
-    const achou = cards.find(c => c.dataset.valor.toLowerCase() === v && c.dataset.valor !== "Outro");
-    marcar(achou ? achou.dataset.valor : "");
-    if (!achou) { outroWrap.classList.remove("open"); outroInner.inert = true; }
-  });
+  if (instInput) {
+    instInput.addEventListener("input", function () {
+      const v = instInput.value.trim().toLowerCase();
+      const achou = cards.find(c => c.dataset.valor.toLowerCase() === v && c.dataset.valor !== "Outro");
+      marcar(achou ? achou.dataset.valor : "");
+      if (!achou && outroWrap && outroInner) { outroWrap.classList.remove("open"); outroInner.inert = true; }
+    });
+  }
 
-  // Reset externo (após enviar)
-  form.addEventListener("reset", function () {
-    marcar("");
-    outroWrap.classList.remove("open"); outroInner.inert = true;
-    outroInput.value = ""; msg.textContent = "";
-  });
+  if (form) {
+    form.addEventListener("reset", function () {
+      marcar("");
+      if (outroWrap && outroInner) { outroWrap.classList.remove("open"); outroInner.inert = true; }
+      if (outroInput) outroInput.value = "";
+      if (msg) msg.textContent = "";
+    });
+  }
 })();
 
-/* ---------- Envio ---------- */
+/* Envio do formulário */
 function mostrarAviso(texto, tipo) {
-  aviso.textContent = texto;
-  aviso.className = tipo || "";
+  if (aviso) {
+    aviso.textContent = texto;
+    aviso.className = tipo || "";
+  }
 }
 
 function limparEstados() {
   tocados.clear();
-  $$(".field", form).forEach(f => { f.classList.remove("is-valid", "is-invalid"); const m = $(".msg", f); if (m) m.textContent = ""; });
+  $$(".field", form).forEach(f => {
+    f.classList.remove("is-valid", "is-invalid");
+    const m = $(".msg", f);
+    if (m) m.textContent = "";
+  });
   atualizarOutra();
   atualizarProgresso();
 }
 
-form.addEventListener("submit", function (evento) {
-  evento.preventDefault();
+if (form) {
+  form.addEventListener("submit", function (evento) {
+    evento.preventDefault();
 
-  // Valida tudo e mostra os erros
-  let primeiro = null;
-  camposAtivos().forEach(function (nome) {
-    tocados.add(nome);
-    if (validar(nome, true) && !primeiro) primeiro = nome;
-  });
-  atualizarProgresso();
-
-  if (primeiro) {
-    const el = campo(primeiro);
-    const wrap = el.closest(".field");
-    wrap.classList.remove("shake"); void wrap.offsetWidth; wrap.classList.add("shake");
-    el.focus();
-    mostrarAviso("Confira os campos destacados.", "erro");
-    return;
-  }
-
-  mostrarAviso("");
-  const primeiroNome = campo("nome").value.trim().split(/\s+/)[0];
-  const txtOriginal = $("#botao-txt").textContent;
-  botao.disabled = true;
-  $("#botao-txt").innerHTML = '<span class="spinner"></span> Enviando...';
-
-  fetch(URL_PLANILHA, {
-    method: "POST",
-    mode: "no-cors",
-    body: new FormData(form)
-  })
-    .then(function () {
-      form.reset();
-      limparEstados();
-      abrirModal(primeiroNome);
-    })
-    .catch(function () {
-      mostrarAviso("Erro ao enviar. Tente de novo.", "erro");
-    })
-    .finally(function () {
-      botao.disabled = false;
-      $("#botao-txt").textContent = txtOriginal;
+    let primeiro = null;
+    camposAtivos().forEach(function (nome) {
+      tocados.add(nome);
+      if (validar(nome, true) && !primeiro) primeiro = nome;
     });
-});
+    atualizarProgresso();
+
+    if (primeiro) {
+      const el = campo(primeiro);
+      if (el) {
+        const wrap = el.closest(".field");
+        if (wrap) {
+          wrap.classList.remove("shake"); void wrap.offsetWidth; wrap.classList.add("shake");
+        }
+        el.focus();
+      }
+      mostrarAviso("Confira os campos destacados.", "erro");
+      return;
+    }
+
+    mostrarAviso("");
+    const primeiroNome = campo("nome").value.trim().split(/\s+/)[0];
+    const txtOriginal = $("#botao-txt") ? $("#botao-txt").textContent : "Enviar";
+    if (botao) botao.disabled = true;
+    if ($("#botao-txt")) $("#botao-txt").textContent = "Enviando...";
+
+    const dados = new URLSearchParams({
+      nome: campo("nome").value,
+      nascimento: campo("nascimento").value,
+      email: campo("email").value,
+      telefone: campo("telefone").value,
+      instrumento: campo("instrumento").value,
+      igreja: campo("igreja").value,
+      outra_igreja: campo("outra_igreja").value,
+      termos: campo("termos") && campo("termos").checked ? "Sim" : ""
+    });
+
+    fetch(URL_PLANILHA, {
+      method: "POST",
+      mode: "no-cors",
+      headers: {
+        "Content-Type": "application/x-www-form-urlencoded"
+      },
+      body: dados.toString()
+    })
+      .then(function () {
+        form.reset();
+        limparEstados();
+        abrirModal(primeiroNome);
+      })
+      .catch(function () {
+        mostrarAviso("Erro ao enviar. Tente de novo.", "erro");
+      })
+      .finally(function () {
+        if (botao) botao.disabled = false;
+        if ($("#botao-txt")) $("#botao-txt").textContent = txtOriginal;
+      });
+  });
+}
 
 atualizarProgresso();
 
-/* ---------- Modal de confirmação + confetes ---------- */
+/* Modal e Confetes */
 const modal = campo("modal");
 let confeteAnim = null;
 
 function abrirModal(nome) {
-  campo("modal-titulo").textContent = nome ? "Vaga garantida, " + nome + "!" : "Vaga garantida!";
-  campo("modal-texto").textContent = "Sua inscrição foi enviada com sucesso. Te esperamos lá!";
+  if (campo("modal-titulo")) campo("modal-titulo").textContent = nome ? "Vaga garantida, " + nome + "!" : "Vaga garantida!";
+  if (campo("modal-texto")) campo("modal-texto").textContent = "Sua inscrição foi enviada com sucesso. Te esperamos lá!";
 
   const detalhes = "JAM CN Valparaíso — uma tarde para fazer música juntos.";
-  campo("btn-agenda").href = "https://calendar.google.com/calendar/render?action=TEMPLATE" +
-    "&text=" + encodeURIComponent("JAM CN Valparaíso") +
-    "&dates=20261114T190000Z/20261114T220000Z" +
-    "&details=" + encodeURIComponent(detalhes) +
-    "&location=" + encodeURIComponent(LOCAL_TEXTO);
+  if (campo("btn-agenda")) {
+    campo("btn-agenda").href = "https://calendar.google.com/calendar/render?action=TEMPLATE" +
+      "&text=" + encodeURIComponent("JAM CN Valparaíso") +
+      "&dates=20261114T190000Z/20261114T220000Z" +
+      "&details=" + encodeURIComponent(detalhes) +
+      "&location=" + encodeURIComponent(LOCAL_TEXTO);
+  }
 
   const texto = "Vou participar da JAM CN Valparaíso! 🎶\n📅 14/11/2026, das 16h às 19h\n📍 CN Valparaíso\nFaça sua inscrição também: " + location.href.split("#")[0];
-  campo("btn-whats").href = "https://wa.me/?text=" + encodeURIComponent(texto);
+  if (campo("btn-whats")) {
+    campo("btn-whats").href = "https://wa.me/?text=" + encodeURIComponent(texto);
+  }
 
-  if (typeof modal.showModal === "function") modal.showModal(); else modal.setAttribute("open", "");
-  if (!reduzMovimento) setTimeout(confete, 250);
+  if (modal) {
+    if (typeof modal.showModal === "function") modal.showModal(); else modal.setAttribute("open", "");
+    if (!reduzMovimento) setTimeout(confete, 250);
+  }
 }
 
 function fecharModal() {
-  if (typeof modal.close === "function") modal.close(); else modal.removeAttribute("open");
+  if (modal) {
+    if (typeof modal.close === "function") modal.close(); else modal.removeAttribute("open");
+  }
 }
-campo("fechar").addEventListener("click", fecharModal);
-modal.addEventListener("click", function (e) { if (e.target === modal) fecharModal(); });
-modal.addEventListener("close", function () { if (confeteAnim) cancelAnimationFrame(confeteAnim); });
+if (campo("fechar")) campo("fechar").addEventListener("click", fecharModal);
+if (modal) {
+  modal.addEventListener("click", function (e) { if (e.target === modal) fecharModal(); });
+  modal.addEventListener("close", function () { if (confeteAnim) cancelAnimationFrame(confeteAnim); });
+}
 
 function confete() {
   const cv = campo("confete");
+  if (!cv || !modal) return;
   const c = cv.getContext("2d");
   const dpr = Math.min(window.devicePixelRatio || 1, 2);
   const W = modal.clientWidth, H = modal.clientHeight;
@@ -475,4 +527,4 @@ function confete() {
     if (dec < 3200 && modal.open) confeteAnim = requestAnimationFrame(frame);
     else c.clearRect(0, 0, W, H);
   })(inicio);
-    }
+}
