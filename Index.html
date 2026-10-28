@@ -1,0 +1,260 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>JAM CN Valparaíso</title>
+  <meta name="description" content="Uma tarde para fazer música juntos. 14 de novembro de 2026, 16h às 19h, no CN Valparaíso.">
+  <meta name="theme-color" content="#0b0b0d">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style.css">
+  <script>document.documentElement.classList.add("js");</script>
+</head>
+<body>
+
+  <header class="navbar">
+    <div class="container navbar__inner">
+      <a href="#topo" class="logo">JAM <span>CN Valparaíso</span></a>
+      <div class="navbar__right">
+        <span class="status" id="status" title="Status das inscrições">
+          <i class="status__dot"></i><span id="status-texto">Inscrições abertas</span>
+        </span>
+        <a href="#inscricao" class="btn btn--small">Inscreva-se</a>
+      </div>
+    </div>
+  </header>
+
+  <main id="topo">
+
+    <!-- HERO -->
+    <section class="hero">
+      <canvas id="fx" aria-hidden="true"></canvas>
+      <div class="container hero__inner">
+        <div class="hero__text">
+          <span class="tag reveal">Música • Comunhão • Prática</span>
+          <h1 class="reveal" style="--d:.08s">Uma tarde para fazer música <em>juntos.</em></h1>
+          <p class="hero__sub reveal" style="--d:.16s">Um encontro para músicos que querem tocar, aprender e compartilhar o que Deus colocou em suas mãos.</p>
+          <a href="#instrumentos" class="btn btn--glow reveal" style="--d:.24s">Quero participar <span aria-hidden="true">→</span></a>
+        </div>
+
+        <aside class="info-card reveal" style="--d:.2s" aria-label="Informações do evento">
+          <h2 class="info-card__title">Anota aí</h2>
+          <ul class="info-card__list">
+            <li>
+              <span class="icon" aria-hidden="true">
+                <svg viewBox="0 0 24 24"><rect x="3" y="5" width="18" height="16" rx="3"/><path d="M3 10h18M8 3v4M16 3v4"/></svg>
+              </span>
+              <div><span class="info-card__label">Data</span><strong>14/11/2026</strong></div>
+            </li>
+            <li>
+              <span class="icon" aria-hidden="true">
+                <svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/></svg>
+              </span>
+              <div><span class="info-card__label">Horário</span><strong>16h às 19h</strong></div>
+            </li>
+            <li>
+              <!-- Troque o link abaixo pelo link exato do Google Maps do CN Valparaíso, se quiser -->
+              <a class="loc-link" id="link-local" href="https://www.google.com/maps/search/?api=1&query=CN+Valpara%C3%ADso+Valpara%C3%ADso+de+Goi%C3%A1s" target="_blank" rel="noopener">
+                <span class="icon" aria-hidden="true">
+                  <svg viewBox="0 0 24 24"><path d="M12 21s7-6.1 7-11a7 7 0 1 0-14 0c0 4.9 7 11 7 11z"/><circle cx="12" cy="10" r="2.5"/></svg>
+                </span>
+                <div><span class="info-card__label">Local · ver no mapa ↗</span><strong>CN Valparaíso</strong></div>
+              </a>
+            </li>
+          </ul>
+          <p class="info-card__note">Os instrumentos estarão disponíveis no local.</p>
+        </aside>
+      </div>
+    </section>
+
+    <!-- COUNTDOWN -->
+    <section class="countdown">
+      <div class="container">
+        <p class="countdown__label reveal" id="cd-label">Faltam apenas</p>
+        <div class="countdown__grid reveal" id="cd" role="timer" aria-live="off" style="--d:.1s">
+          <div class="cd-box"><b data-u="d">00</b><small>dias</small></div>
+          <div class="cd-box"><b data-u="h">00</b><small>horas</small></div>
+          <div class="cd-box"><b data-u="m">00</b><small>minutos</small></div>
+          <div class="cd-box"><b data-u="s">00</b><small>segundos</small></div>
+        </div>
+      </div>
+    </section>
+
+    <!-- SOBRE -->
+    <section class="about" id="sobre">
+      <div class="container about__inner">
+        <h2 class="reveal">Mais que tocar. <span>É crescer junto.</span></h2>
+        <p class="reveal" style="--d:.1s">
+          A JAM é um espaço para conectar músicos de diferentes comunidades, trocar experiências
+          e aprender uns com os outros. Mais do que uma prática musical, é um momento de
+          comunhão: tocar lado a lado, servir com os dons que recebemos e fortalecer laços
+          que vão muito além da música.
+        </p>
+      </div>
+    </section>
+
+    <!-- ESCOLHA SEU INSTRUMENTO -->
+    <section class="picker" id="instrumentos">
+      <div class="container">
+        <div class="section-head reveal">
+          <h2>Escolha seu instrumento</h2>
+          <p>Toque no que você vai trazer. A gente preenche a inscrição para você.</p>
+        </div>
+
+        <div class="picker__grid reveal" id="picker" role="radiogroup" aria-label="Instrumento principal" style="--d:.1s">
+          <button type="button" class="inst" role="radio" aria-checked="false" data-valor="Bateria"><span class="inst__emoji">🥁</span><span class="inst__nome">Bateria</span></button>
+          <button type="button" class="inst" role="radio" aria-checked="false" data-valor="Baixo"><span class="inst__emoji inst__emoji--baixo">🎸</span><span class="inst__nome">Baixo</span></button>
+          <button type="button" class="inst" role="radio" aria-checked="false" data-valor="Guitarra"><span class="inst__emoji">🎸</span><span class="inst__nome">Guitarra</span></button>
+          <button type="button" class="inst" role="radio" aria-checked="false" data-valor="Teclado"><span class="inst__emoji">🎹</span><span class="inst__nome">Teclado</span></button>
+          <button type="button" class="inst" role="radio" aria-checked="false" data-valor="Vocal"><span class="inst__emoji">🎤</span><span class="inst__nome">Vocal</span></button>
+          <button type="button" class="inst" role="radio" aria-checked="false" data-valor="Outro"><span class="inst__emoji">✨</span><span class="inst__nome">Outro</span></button>
+        </div>
+
+        <div class="picker__out" id="picker-out" aria-live="polite">
+          <div class="collapse" id="outro-wrap">
+            <div class="collapse__inner">
+              <input type="text" id="outro-inst" placeholder="Qual instrumento ou função?" aria-label="Qual instrumento ou função?" maxlength="40">
+            </div>
+          </div>
+          <p class="picker__msg" id="picker-msg"></p>
+        </div>
+      </div>
+    </section>
+
+    <!-- INSCRIÇÃO -->
+    <section class="signup" id="inscricao">
+      <div class="container signup__inner">
+        <div class="signup__intro reveal">
+          <h2>Faça sua inscrição</h2>
+          <p>Preencha seus dados abaixo para confirmar a sua participação.</p>
+          <ul class="signup__bullets">
+            <li>Leva menos de 1 minuto</li>
+            <li>Instrumentos disponíveis no local</li>
+            <li>Confirmação na hora</li>
+          </ul>
+        </div>
+
+        <form id="formulario" class="reveal" style="--d:.1s" novalidate>
+          <div class="progress" aria-hidden="true">
+            <div class="progress__top"><span>Seu progresso</span><span id="prog-txt">0 de 8</span></div>
+            <div class="progress__bar"><i id="prog-bar"></i></div>
+          </div>
+
+          <div class="field">
+            <label for="nome">Nome completo</label>
+            <div class="control"><input type="text" id="nome" name="nome" placeholder="Seu nome e sobrenome" autocomplete="name" required></div>
+            <small class="msg"></small>
+          </div>
+
+          <div class="field-row">
+            <div class="field">
+              <label for="nascimento">Data de nascimento</label>
+              <div class="control"><input type="date" id="nascimento" name="nascimento" min="1920-01-01" required></div>
+              <small class="msg"></small>
+            </div>
+            <div class="field">
+              <label for="telefone">Telefone / WhatsApp</label>
+              <div class="control"><input type="tel" id="telefone" name="telefone" placeholder="(61) 90000-0000" inputmode="numeric" autocomplete="tel" required></div>
+              <small class="msg"></small>
+            </div>
+          </div>
+
+          <div class="field">
+            <label for="email">E-mail</label>
+            <div class="control"><input type="email" id="email" name="email" placeholder="voce@email.com" autocomplete="email" required></div>
+            <small class="msg"></small>
+          </div>
+
+          <div class="field">
+            <label for="instrumento">Instrumento / Função principal</label>
+            <div class="control"><input type="text" id="instrumento" name="instrumento" placeholder="Escolha acima ou digite aqui" required></div>
+            <small class="msg"></small>
+          </div>
+
+          <div class="field">
+            <label for="igreja">De qual CN ou igreja você é?</label>
+            <div class="control">
+              <select id="igreja" name="igreja" required>
+                <option value="" disabled selected>Selecione uma opção</option>
+                <option>CN Valparaíso</option>
+                <option>CN Arniqueiras</option>
+                <option>CN SIA</option>
+                <option>CN Hípica Hall</option>
+                <option>CN Gama</option>
+                <option>CN Planaltina</option>
+                <option>CN Recanto das Emas</option>
+                <option>CN Santa Maria</option>
+                <option>CN Samambaia</option>
+                <option>CN Águas Claras</option>
+                <option>CN Taguatinga</option>
+                <option>CN Cidade Ocidental</option>
+                <option>Outra igreja</option>
+              </select>
+            </div>
+            <small class="msg"></small>
+          </div>
+
+          <div class="collapse" id="outra-wrap">
+            <div class="collapse__inner" inert>
+              <div class="field">
+                <label for="outra_igreja">Se escolheu "Outra igreja", especifique qual:</label>
+                <div class="control"><input type="text" id="outra_igreja" name="outra_igreja" placeholder="Nome da sua igreja" disabled></div>
+                <small class="msg"></small>
+              </div>
+            </div>
+          </div>
+
+          <div class="field field--check">
+            <label class="check">
+              <input type="checkbox" id="termos" name="termos" value="Sim" required>
+              <span>Concordo com os termos do evento e autorizo o uso de imagem.</span>
+            </label>
+            <small class="msg"></small>
+          </div>
+
+          <button type="submit" class="btn btn--glow btn--block" id="botao"><span id="botao-txt">Garantir Minha Vaga</span></button>
+          <p id="aviso" role="status" aria-live="polite"></p>
+        </form>
+      </div>
+    </section>
+  </main>
+
+  <footer class="footer">
+    <div class="container footer__inner">
+      <div>
+        <a href="#topo" class="logo">JAM <span>CN Valparaíso</span></a>
+        <p>Um encontro para fazer música juntos.</p>
+      </div>
+      <a class="footer__insta" href="https://www.instagram.com/cnworship_" target="_blank" rel="noopener">@cnworship_</a>
+    </div>
+  </footer>
+
+  <!-- MODAL DE CONFIRMAÇÃO -->
+  <dialog id="modal" aria-labelledby="modal-titulo">
+    <canvas id="confete" aria-hidden="true"></canvas>
+    <div class="modal__body">
+      <div class="modal__check" aria-hidden="true">
+        <svg viewBox="0 0 52 52"><circle cx="26" cy="26" r="23"/><path d="M15 27l7 7 15-16"/></svg>
+      </div>
+      <h2 id="modal-titulo">Vaga garantida!</h2>
+      <p id="modal-texto">Sua inscrição foi enviada. Te esperamos lá!</p>
+
+      <ul class="modal__resumo">
+        <li><span>📅</span> 14 de novembro de 2026</li>
+        <li><span>🕓</span> 16h às 19h</li>
+        <li><span>📍</span> <a href="https://www.google.com/maps/search/?api=1&query=CN+Valpara%C3%ADso+Valpara%C3%ADso+de+Goi%C3%A1s" target="_blank" rel="noopener">CN Valparaíso ↗</a></li>
+      </ul>
+
+      <div class="modal__acoes">
+        <a class="btn btn--glow" id="btn-agenda" target="_blank" rel="noopener">Adicionar ao Google Agenda</a>
+        <a class="btn btn--ghost" id="btn-whats" target="_blank" rel="noopener">Compartilhar no WhatsApp</a>
+      </div>
+      <button type="button" class="linkbtn" id="fechar">Fechar</button>
+    </div>
+  </dialog>
+
+  <script src="script.js"></script>
+</body>
+</html>
