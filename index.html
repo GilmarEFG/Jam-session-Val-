@@ -1,3 +1,4 @@
+
 <!DOCTYPE html>
 <html lang="pt-br">
 <head>
@@ -55,7 +56,6 @@
               <div><span class="info-card__label">Horário</span><strong>16h às 19h</strong></div>
             </li>
             <li>
-              <!-- Troque o link abaixo pelo link exato do Google Maps do CN Valparaíso, se quiser -->
               <a class="loc-link" id="link-local" href="https://www.google.com/maps/search/?api=1&query=CN+Valpara%C3%ADso+Valpara%C3%ADso+de+Goi%C3%A1s" target="_blank" rel="noopener">
                 <span class="icon" aria-hidden="true">
                   <svg viewBox="0 0 24 24"><path d="M12 21s7-6.1 7-11a7 7 0 1 0-14 0c0 4.9 7 11 7 11z"/><circle cx="12" cy="10" r="2.5"/></svg>
@@ -104,12 +104,42 @@
         </div>
 
         <div class="picker__grid reveal" id="picker" role="radiogroup" aria-label="Instrumento principal" style="--d:.1s">
-          <button type="button" class="inst" role="radio" aria-checked="false" data-valor="Bateria"><span class="inst__emoji">🥁</span><span class="inst__nome">Bateria</span></button>
-          <button type="button" class="inst" role="radio" aria-checked="false" data-valor="Baixo"><span class="inst__emoji inst__emoji--baixo">🎸</span><span class="inst__nome">Baixo</span></button>
-          <button type="button" class="inst" role="radio" aria-checked="false" data-valor="Guitarra"><span class="inst__emoji">🎸</span><span class="inst__nome">Guitarra</span></button>
-          <button type="button" class="inst" role="radio" aria-checked="false" data-valor="Teclado"><span class="inst__emoji">🎹</span><span class="inst__nome">Teclado</span></button>
-          <button type="button" class="inst" role="radio" aria-checked="false" data-valor="Vocal"><span class="inst__emoji">🎤</span><span class="inst__nome">Vocal</span></button>
-          <button type="button" class="inst" role="radio" aria-checked="false" data-valor="Outro"><span class="inst__emoji">✨</span><span class="inst__nome">Outro</span></button>
+          <button type="button" class="inst" role="radio" aria-checked="false" data-valor="Bateria">
+            <span class="inst__icon" aria-hidden="true">
+              <svg viewBox="0 0 24 24"><path d="M2 10c0-2.2 4.5-4 10-4s10 1.8 10 4v8c0 2.2-4.5 4-10 4s-10-1.8-10-4v-8z"/><path d="M2 10c0 2.2 4.5 4 10 4s10-1.8 10-4"/><path d="m6 3 4 5M18 3l-4 5"/></svg>
+            </span>
+            <span class="inst__nome">Bateria</span>
+          </button>
+          <button type="button" class="inst" role="radio" aria-checked="false" data-valor="Baixo">
+            <span class="inst__icon" aria-hidden="true">
+              <svg viewBox="0 0 24 24"><path d="M9 18V5l12-2v13"/><circle cx="6" cy="18" r="3"/><circle cx="18" cy="16" r="3"/></svg>
+            </span>
+            <span class="inst__nome">Baixo</span>
+          </button>
+          <button type="button" class="inst" role="radio" aria-checked="false" data-valor="Guitarra">
+            <span class="inst__icon" aria-hidden="true">
+              <svg viewBox="0 0 24 24"><path d="m14.5 12.5 2-2"/><path d="m11.5 9.5 2-2"/><path d="M17.5 7.5 20 5l1 1-2.5 2.5"/><path d="M6 15a4 4 0 1 0 5.655-5.658A4 4 0 0 0 6 15z"/></svg>
+            </span>
+            <span class="inst__nome">Guitarra</span>
+          </button>
+          <button type="button" class="inst" role="radio" aria-checked="false" data-valor="Teclado">
+            <span class="inst__icon" aria-hidden="true">
+              <svg viewBox="0 0 24 24"><rect x="2" y="6" width="20" height="12" rx="2"/><path d="M6 12v6M10 12v6M14 12v6M18 12v6"/></svg>
+            </span>
+            <span class="inst__nome">Teclado</span>
+          </button>
+          <button type="button" class="inst" role="radio" aria-checked="false" data-valor="Vocal">
+            <span class="inst__icon" aria-hidden="true">
+              <svg viewBox="0 0 24 24"><path d="M12 2a3 3 0 0 0-3 3v7a3 3 0 0 0 6 0V5a3 3 0 0 0-3-3z"/><path d="M19 10v2a7 7 0 0 1-14 0v-2"/><line x1="12" y1="19" x2="12" y2="22"/></svg>
+            </span>
+            <span class="inst__nome">Vocal</span>
+          </button>
+          <button type="button" class="inst" role="radio" aria-checked="false" data-valor="Outro">
+            <span class="inst__icon" aria-hidden="true">
+              <svg viewBox="0 0 24 24"><path d="m12 3 1.912 5.813a2 2 0 0 0 1.275 1.275L21 12l-5.813 1.912a2 2 0 0 0-1.275 1.275L12 21l-1.912-5.813a2 2 0 0 0-1.275-1.275L3 12l5.813-1.912a2 2 0 0 0 1.275-1.275L12 3z"/></svg>
+            </span>
+            <span class="inst__nome">Outro</span>
+          </button>
         </div>
 
         <div class="picker__out" id="picker-out" aria-live="polite">
@@ -227,7 +257,7 @@
         <a href="#topo" class="logo">JAM <span>CN Valparaíso</span></a>
         <p>Um encontro para fazer música juntos.</p>
       </div>
-      <a class="footer__insta" href="https://www.instagram.com/cnworship_" target="_blank" rel="noopener">@cnworship_</a>
+      <a class="footer__insta" href="https://www.instagram.com/cn_worship/" target="_blank" rel="noopener">@cnworship_</a>
     </div>
   </footer>
 
